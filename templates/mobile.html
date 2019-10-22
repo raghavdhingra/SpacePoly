@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mobile Emulator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <link rel="icon" href="http://pngimg.com/uploads/moon/moon_PNG46.png" />
+    <style>
+        *{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .heading{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .blink{
+            animation: blink 1s ease infinite forwards;
+            text-align: center;
+        }
+        @keyframes blink {
+            20%{opacity: 1;}
+            50%{opacity: 0;}
+            80%{opacity: 1;}
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="heading" id="init">
+        <h1 style="text-align: center;">Mobile Emulator</h1>
+        <h3 class="blink">Waiting for the player to respond...</h3>
+    </div>
+
+    <!-- <button onclick="apiCall();">Click Here</button> -->
+
+    <div id="moon">
+        
+    </div>
+
+    <script>
+        
+        const req = new XMLHttpRequest();
+        req.open('GET','/playerapi',true);
+
+        const apiCall = () => {
+            setTimeout(
+                ()=>{
+                    resp = JSON.parse(req.responseText);
+                    document.getElementById("moon").innerText = `${resp[1].id}`;
+                    if (resp[0].points == 1){
+                        location.href = "https://mani14011998.github.io/moon/";
+                    }
+                    else if (resp[0].points == 2) {
+                        location.href = "https://mani14011998.github.io/mars-360/";
+                    }
+                },2000
+            );
+        }
+        
+        setInterval(
+            ()=>{
+                apiCall();
+            },2000
+        );
+
+        req.send();
+    </script>
+
+</body>
+</html>
