@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game Emulator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+
+    <style>
+        .centralize{
+            top: 50%;
+            left: 50%;
+            text-align: center;
+            position: absolute;
+            transform: translate(-50%,-50%);
+        }
+        .button {
+            border: 2px solid white;
+            font-size: 27px;
+        }
+        #one {
+            height: 100px;
+            width: 100px;
+            display: inline-block;
+        }
+        .loader{
+            z-index: 99;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        .none{
+            animation: none1 1s ease;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+        }
+        @keyframes none1{
+            100%{transform: scale(10);opacity: 0;}
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="loader" id="loader">
+        <img src="{% static 'assets/rocket.gif' %}" style="height: 100%;width: 100%;" />
+    </div>
+
+    <center><font style="font-weight: bold;color: #666;font-size: 1.5em;font-family: Arial, Helvetica, sans-serif;">Game Emulator</font></center>
+
+    <!-- <button id="btn">
+        <input type="text" value="2" id="add_pts" hidden />
+        Click
+    </button> -->
+
+
+    <div class="centralize">
+        <div>
+            <div id = "one">
+                <img style="filter: drop-shadow(0 0 10px #ccc);" src='https://66.media.tumblr.com/4487da1524b8d90e0007c5da72fc49e7/tumblr_puhatt8Lzf1s8erfco3_100.png'>
+            </div>
+        </div>
+        <br><br>
+        <button class="button" onclick="roll()">Roll</button>
+    </div>
+
+
+    <script>
+
+        setTimeout(
+            ()=>{
+                document.getElementById("loader").classList.add("none");
+            },5000
+        );
+        
+        setTimeout(
+            ()=>{
+                document.getElementById("loader").style.display='none';
+            },6000
+        );
+
+        $("#btn").click(
+            () => {
+                $.ajax({
+                url:"/plus",
+                data:{
+                    "val":document.getElementById("add_pts").value
+                },
+                dataType: 'json',
+                success: ()=>{
+                    alert("");
+                }
+            });
+            });
+
+    </script>
+
+    <script>
+        function roll() {
+            var dicePics1 = [
+                "<img style='filter: drop-shadow(0 0 10px #ccc);' src='https://66.media.tumblr.com/5240dc2418bbd8cadafc6a238e84f51d/tumblr_puhatt8Lzf1s8erfco2_100.png'>",
+                "<img style='filter: drop-shadow(0 0 10px #ccc);' src='https://66.media.tumblr.com/a9e433dace9d745dbd7c157ddacdf6f3/tumblr_puhatt8Lzf1s8erfco1_100.png'>",
+                "<img style='filter: drop-shadow(0 0 10px #ccc);' src='https://66.media.tumblr.com/4487da1524b8d90e0007c5da72fc49e7/tumblr_puhatt8Lzf1s8erfco3_100.png'>",
+                "<img style='filter: drop-shadow(0 0 10px #ccc);' src='https://66.media.tumblr.com/fd6e3e52de325f1f2023e320a1ff8191/tumblr_puhatt8Lzf1s8erfco4_100.png'>",
+                "<img style='filter: drop-shadow(0 0 10px #ccc);' src='https://66.media.tumblr.com/1baf8a8bffc14a37b2ceda91d7ba495c/tumblr_puhatt8Lzf1s8erfco5_100.png'>",
+                "<img style='filter: drop-shadow(0 0 10px #ccc);' src='https://66.media.tumblr.com/ee1eeff4acbec1af9223c76df28dae8a/tumblr_puhatt8Lzf1s8erfco6_100.png'>"
+            ]
+
+            var randNum = Math.floor(Math.random() * dicePics1.length)
+            one.innerHTML = dicePics1[randNum];
+            var realNum = randNum + 1;
+            // alert(realNum);
+        }
+    </script>
+
+</body>
+</html>
